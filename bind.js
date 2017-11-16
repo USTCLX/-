@@ -15,7 +15,7 @@ var Scope = function(options) {
         (function(i) {
             self.watch(function() {
                 //获取属性名
-                return self.str2PropGet(elements[i].getAttribute('ng-model'));
+                return self.str2PropGet(elements[i].getAttribute('sx-model'));
             }, function() {
                 var args = Array.prototype.slice.call(arguments);
                 var elementType = elements[i].tagName.toLowerCase();
