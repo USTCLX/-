@@ -9,14 +9,12 @@
  * 
  * 在js中实例化一个Scope，例如：
  * var scope = new Scope({reciprocal:true})//开启双向绑定。此时input中的变化会反应到Scope.user.name中。
- * scope.user = {
- *     name:'AHMI'
- * };
+ * scope.user = {name:'AHMI'};
  * scope.digest();//手动进行一次循环检查，更新视图。
  * 
  * 开发者在后期需要通过更新model来更新视图时，需要手动触发Scope.digest()
  *
- * ————————————————————————————————————————————————————————————————————————————————————————————————
+ * —————————————————————————————————
  *
  * v0.2 edit by lixiang in 2017/11/16 
  * 通过es5的setter和getter机制，实现了无需手动digest()而触发数据刷新
