@@ -1,3 +1,29 @@
+// *
+//  * v0.1 create by lixiang in 2017/11/15
+//  * 双向绑定模型,Scope对象维护一个watchers数组，watchers存放检查的表达式和对应的回调函数,详见设计文档与example
+//  * 用例：
+//  * 在html中使用ng-model指令绑定值，例如：
+//  * <input type="text",ng-model="user.name">
+//  * 
+//  * 在js中实例化一个Scope，例如：
+//  * var scope = new Scope({reciprocal:true})//开启双向绑定。此时input中的变化会反应到Scope.user.name中。
+//  * scope.user = {
+//  *     name:'AHMI'
+//  * };
+//  * scope.digest();//手动进行一次循环检查，更新视图。
+//  * 
+//  * 开发者在后期需要通过更新model来更新视图时，出于性能考虑，需要手动触发Scope.digest()
+//  *
+//  * ————————————————————————————————————————————————————————————————————————————————————————————————
+//  *
+//  * v0.2 edit by lixiang in 2017/11/16 
+//  * 通过es5的setter和getter机制，实现了无需手动digest()而触发数据刷新
+//  * 用例：
+//  * 在注入数据之后，调用scope.setup()取代scope.digest()方法。
+//  * 后面数据改变时直接操作scope中的数据就可以了，无需手动调用digest()方法。
+ 
+
+
 /**
  * Scope构造函数
  * @param {obj} options   选项，目前支持是否双向绑定。
@@ -15,7 +41,7 @@ var Scope = function(options) {
         (function(i) {
             self.watch(function() {
                 //获取属性名
-                return self.str2PropGet(elements[i].getAttribute('sx-model'));
+                return self.str2PropGet(elements[i].getAttribute('ng-model'));
             }, function() {
                 var args = Array.prototype.slice.call(arguments);
                 var elementType = elements[i].tagName.toLowerCase();
@@ -108,7 +134,7 @@ Object.assign(Scope.prototype,{
             parserData = function(obj){
                 for(var prop in obj){
                     if(obj.hasOwnProperty(prop)){
-                        propType = judgeObjType(obj[prop]);
+                        propType = self._judgeObjType(obj[prop]);
                         value = obj[prop];
                         if((prop!=='watchers')&&(propType!=='function')){
                             (function(o,prop,value){
@@ -120,6 +146,9 @@ Object.assign(Scope.prototype,{
                                     },
                                     set:function(newVal){
                                         value = newVal;
+                                        if(self._judgeObjType(value)==='object'){
+                                            parserData(value)
+                                        }
                                         self.digest()
                                     }
                                 })
@@ -134,29 +163,28 @@ Object.assign(Scope.prototype,{
             };
         parserData(this);
         this.digest();
-        // console.log(this['user'])
+    },
+    /**
+     * 判断一个对象的类型
+     * @param  {obj} obj 待判断对象
+     * @return {string}     对象类型字符串
+     */
+    _judgeObjType:function(obj){
+        var type = Object.prototype.toString.call(obj);
+        switch(type){
+            case '[object Array]':
+                return 'array';
+            case '[object String]':
+                return 'string'
+            case '[object Object]':
+                return 'object';
+            case '[object Function]':
+                return 'function;';
+            case '[object Number]':
+                return 'number';
+            default:
+                return 'null';
+        }
     }
 })
 
-/**
- * 判断一个对象的类型
- * @param  {obj} obj 待判断对象
- * @return {string}     对象类型字符串
- */
-function judgeObjType(obj){
-    var type = Object.prototype.toString.call(obj);
-    switch(type){
-        case '[object Array]':
-            return 'array';
-        case '[object String]':
-            return 'string'
-        case '[object Object]':
-            return 'object';
-        case '[object Function]':
-            return 'function;';
-        case '[object Number]':
-            return 'number';
-        default:
-            return 'null';
-    }
-}
