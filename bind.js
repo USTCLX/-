@@ -3,7 +3,7 @@
 //  * 双向绑定模型,Scope对象维护一个watchers数组，watchers存放检查的表达式和对应的回调函数,详见设计文档与example
 //  * 用例：
 //  * 在html中使用ng-model指令绑定值，例如：
-//  * <input type="text",ng-model="user.name">
+//  * <input type="text",sx-model="user.name">
 //  * 
 //  * 在js中实例化一个Scope，例如：
 //  * var scope = new Scope({reciprocal:true})//开启双向绑定。此时input中的变化会反应到Scope.user.name中。
@@ -34,22 +34,22 @@ var Scope = function(options) {
 
     var self = this;
     var reciprocal = options&&options.reciprocal||false;//是否支持视图到模型的绑定
-    var elements = document.querySelectorAll('[ng-model]');//获取所有包含ng-model属性的元素
+    var elements = document.querySelectorAll('[sx-model]');//获取所有包含ng-model属性的元素
 
     for(var i = 0, len =elements.length; i < len; i++){
         
         (function(i) {
             self.watch(function() {
                 //获取属性名
-                return self.str2PropGet(elements[i].getAttribute('ng-model'));
+                return self.str2PropGet(elements[i].getAttribute('sx-model'));
             }, function() {
                 var args = Array.prototype.slice.call(arguments);
                 var elementType = elements[i].tagName.toLowerCase();
                 //设置属性值
                 if(elementType === 'input' || elementType === 'textarea' || elementType === 'select') {
-                    elements[i].value = args[0]||self.str2PropGet(elements[i].getAttribute('ng-model'));;
+                    elements[i].value = args[0]||self.str2PropGet(elements[i].getAttribute('sx-model'));;
                 } else {
-                    elements[i].innerHTML = args[0]||self.str2PropGet(elements[i].getAttribute('ng-model'));
+                    elements[i].innerHTML = args[0]||self.str2PropGet(elements[i].getAttribute('sx-model'));
                 }
             });
         })(i);
@@ -59,10 +59,10 @@ var Scope = function(options) {
     //事件处理与监听
     function pageElementEventHandler(e) {
         var target = e.target || e.srcElemnt;
-        var fullPropName = target.getAttribute('ng-model');
+        var fullPropName = target.getAttribute('sx-model');
 
         if(fullPropName && fullPropName !== '') {
-            self.str2PropSet(target.getAttribute('ng-model'), target.value);
+            self.str2PropSet(target.getAttribute('sx-model'), target.value);
             self.digest();
         }
 
