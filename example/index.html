@@ -16,7 +16,7 @@
             <button type="button" onclick="scope.user.decAge()">-</button>
             <br/>
             Gender:<br>
-            <select ng-model="user.gender">
+            <select sx-model="user.gender">
                 <option disabled selected value></option>
                 <option value="1">Male</option>
                 <option value="2">Female</option>
@@ -31,21 +31,21 @@
         <strong>
             Name:
         </strong>
-        <label ng-model="user.name"></label><br>
+        <label sx-model="user.name"></label><br>
          <strong>
             Age:
         </strong>
-        <label ng-model="user.age"></label><br>
+        <label sx-model="user.age"></label><br>
          <strong>
             Gender:
         </strong>
-        <label ng-model="user.gender"></label><br>
+        <label sx-model="user.gender"></label><br>
 
         <button id='switch'>
             switch
         </button>
     </body>
 
-    <script src="./tbinding.js"></script>
+    <script src="./bind.js"></script>
     <script src="./example.js"></script>
 </html>
