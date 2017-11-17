@@ -3,19 +3,17 @@ var scope = new Scope({
 });
 
 scope.user = {
-	name:'lixiang',
+    name:'lixiang',
     age: 25,
     gender: 2
 };
 
 scope.user.incAge = function() {
     scope.user.age += 1;
-    scope.digest();
 }
 
 scope.user.decAge = function() {
     scope.user.age -= 1;
-    scope.digest();
 }
 
 scope.setup();
@@ -27,5 +25,4 @@ document.getElementById('switch').addEventListener('click',function(){
 		age:20,
 		gender:2
 	}
-	// scope.digest()
 },false)
