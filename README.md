@@ -20,5 +20,5 @@
  * 通过es5的setter和getter机制，实现了无需手动digest()而触发数据刷新
  * 用例：
  * 在注入数据之后，调用scope.setup()取代scope.digest()方法。
- * 后面数据改变时直接操作scope中的数据就可以了，无需手动调用digest()方法。不过如果替换掉了整个user,则自动刷新失效
+ * 后面数据改变时直接操作scope中的数据就可以了，无需手动调用digest()方法。
  
