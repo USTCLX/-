@@ -5,7 +5,7 @@
  * 双向绑定模型,Scope对象维护一个watchers数组，watchers存放检查的表达式和对应的回调函数,详见设计文档与example
  * 用例：
  * 在html中使用ng-model指令绑定值，例如：
- * <input type="text",ng-model="user.name">
+ * <input type="text",sx-model="user.name">
  * 
  * 在js中实例化一个Scope，例如：
  * var scope = new Scope({reciprocal:true})//开启双向绑定。此时input中的变化会反应到Scope.user.name中。
