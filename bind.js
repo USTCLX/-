@@ -170,21 +170,7 @@ Object.assign(Scope.prototype,{
      * @return {string}     对象类型字符串
      */
     _judgeObjType:function(obj){
-        var type = Object.prototype.toString.call(obj);
-        switch(type){
-            case '[object Array]':
-                return 'array';
-            case '[object String]':
-                return 'string'
-            case '[object Object]':
-                return 'object';
-            case '[object Function]':
-                return 'function;';
-            case '[object Number]':
-                return 'number';
-            default:
-                return 'null';
-        }
+        return Object.prototype.toString.call(obj).slice(8,-1).toLowerCase();
     }
 })
 
