@@ -40,7 +40,7 @@ var Scope = function(options) {
         
         (function(i) {
             self.watch(function() {
-                //获取属性名
+                //获取属性值
                 return self.str2PropGet(elements[i].getAttribute('sx-model'));
             }, function() {
                 var args = Array.prototype.slice.call(arguments);
